@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_openvpn-client" default="compile.module.openvpn-client">
+  <dirname property="module.openvpn-client.basedir" file="${ant.file.module_openvpn-client}"/>
+  
+  <property name="module.jdk.home.openvpn-client" value="${jdk.home.android_api_17_platform}"/>
+  <property name="module.jdk.bin.openvpn-client" value="${jdk.bin.android_api_17_platform}"/>
+  <property name="module.jdk.classpath.openvpn-client" value="jdk.classpath.android_api_17_platform"/>
+  
+  <property name="compiler.args.openvpn-client" value="-encoding windows-1252 -source 1.7 ${compiler.args}"/>
+  
+  <property name="openvpn-client.output.dir" value="${module.openvpn-client.basedir}/build/classes/production/OpenVPN-Client"/>
+  <property name="openvpn-client.testoutput.dir" value="${module.openvpn-client.basedir}/build/classes/test/OpenVPN-Client"/>
+  
+  <path id="openvpn-client.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="openvpn-client.module.production.classpath">
+    <path refid="${module.jdk.classpath.openvpn-client}"/>
+  </path>
+  
+  <path id="openvpn-client.runtime.production.module.classpath">
+    <pathelement location="${openvpn-client.output.dir}"/>
+  </path>
+  
+  <path id="openvpn-client.module.classpath">
+    <path refid="${module.jdk.classpath.openvpn-client}"/>
+    <pathelement location="${openvpn-client.output.dir}"/>
+  </path>
+  
+  <path id="openvpn-client.runtime.module.classpath">
+    <pathelement location="${openvpn-client.testoutput.dir}"/>
+    <pathelement location="${openvpn-client.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.openvpn-client">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.openvpn-client">
+    <patternset refid="excluded.from.module.openvpn-client"/>
+  </patternset>
+  
+  <path id="openvpn-client.module.sourcepath">
+    <dirset dir="${module.openvpn-client.basedir}">
+      <include name="gen"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.openvpn-client" depends="compile.module.openvpn-client.production,compile.module.openvpn-client.tests" description="Compile module OpenVPN-Client"/>
+  
+  <target name="compile.module.openvpn-client.production" depends="register.custom.compilers" description="Compile module OpenVPN-Client; production classes">
+    <mkdir dir="${openvpn-client.output.dir}"/>
+    <javac2 destdir="${openvpn-client.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.openvpn-client}/javac">
+      <compilerarg line="${compiler.args.openvpn-client}"/>
+      <bootclasspath refid="openvpn-client.module.bootclasspath"/>
+      <classpath refid="openvpn-client.module.production.classpath"/>
+      <src refid="openvpn-client.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.openvpn-client"/>
+    </javac2>
+    
+    <copy todir="${openvpn-client.output.dir}">
+      <fileset dir="${module.openvpn-client.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.openvpn-client.tests" depends="register.custom.compilers,compile.module.openvpn-client.production" description="compile module OpenVPN-Client; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.openvpn-client" description="cleanup module">
+    <delete dir="${openvpn-client.output.dir}"/>
+    <delete dir="${openvpn-client.testoutput.dir}"/>
+  </target>
+</project>

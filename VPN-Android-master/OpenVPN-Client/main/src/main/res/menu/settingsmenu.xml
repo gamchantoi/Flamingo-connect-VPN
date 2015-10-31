@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".MainActivity_vpn"
+    style="@style/CardView.Light"
+    android:clickable="false"
+    android:theme="@style/CardView.Light" >
+
+    <item
+        android:id="@+id/action_startvpn"
+        android:showAsAction="never"
+        android:title="Connect VPN"/>
+    <item
+        android:id="@+id/action_stopvpn"
+        android:showAsAction="never"
+        android:title="DisConnect VPN"/>
+    <item
+        android:id="@+id/action_removeProfile"
+        android:showAsAction="never"
+        android:title="Add Password"/>
+</menu>
